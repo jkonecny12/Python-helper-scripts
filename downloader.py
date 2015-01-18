@@ -25,7 +25,7 @@ class Downloader:
         if not sizeDownloaded < totalSize:
             sizeDownloaded = totalSize
 
-        leftMsg = (FILE_NAME + '  [')
+        leftMsg = (self.fileName + '  [')
         rightMsg = '] ' + str(sizeDownloaded) + ' / ' + str(totalSize) + ' KB'
         leftSize = len(leftMsg)
         consoleSpace = term_width - (leftSize + 20) # plus 16 to have a reserve from end with right message for showing size
@@ -37,12 +37,11 @@ class Downloader:
             print('')
 
     def downloadFile(self, link, name=""):
-        global FILE_NAME
-
+        'Download file and register for creating graphical progress'
         if not name:
-            FILE_NAME = link.split('/')[-1]
+            self.fileName = link.split('/')[-1]
         else:
-            FILE_NAME = name
+            self.fileName = name
 
         (filename, headers) = urllib.request.urlretrieve(link, reporthook=self._reportDownload)
         return filename
